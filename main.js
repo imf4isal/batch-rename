@@ -1,4 +1,5 @@
 import fs from "fs";
+import path from "path";
 
 function parseArgs() {
   const args = process.argv.slice(2);
@@ -28,7 +29,39 @@ function main() {
 
   const files = fs.readdirSync(args.folderPath);
 
-  console.log(args, files);
+  let countRenamed = 0;
+
+  console.log(
+    `Starting to rename files with extension '${args.currentExtension}' to '${args.newExtension}' in '${args.folderPath}'`
+  );
+
+  for (const file of files) {
+    const filePath = path.join(args.folderPath, file);
+
+    if (fs.statSync(filePath).isDirectory()) {
+      continue;
+    }
+
+    if (path.extname(filePath) === args.currentExtension) {
+      const baseName = path.basename(filePath, args.currentExtension);
+      const newName = path.join(
+        args.folderPath,
+        `${baseName}${args.newExtension}`
+      );
+
+      try {
+        fs.renameSync(filePath, newName);
+        console.log(`Renamed: ${file} → ${path.basename(newName)}`);
+        countRenamed++;
+      } catch (err) {
+        console.error(`Error renaming ${file}: ${err.message}`);
+      }
+    }
+  }
+
+  console.log(
+    `\nOperation completed: ${countRenamed} files renamed from ${args.currentExtension} to ${args.newExtension}`
+  );
 }
 
 main();
