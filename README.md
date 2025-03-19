@@ -7,13 +7,13 @@ Easily rename file extensions in a folder using your terminal.
 Run the following command:
 
 ```sh
-node foldername currentExtension newExtension
+node main.js foldername currentExtension newExtension
 ```
 
 If your target folder has multiple words, wrap it in quotes:
 
 ```sh
-node 'multi word folder name' currentExtension newExtension
+node main.js 'multi word folder name' currentExtension newExtension
 ```
 
 #### Scene Behind
