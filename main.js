@@ -1,3 +1,5 @@
+import fs from "fs";
+
 function parseArgs() {
   const args = process.argv.slice(2);
 
@@ -24,7 +26,9 @@ function main() {
     process.exit(1);
   }
 
-  console.log(args);
+  const files = fs.readdirSync(args.folderPath);
+
+  console.log(args, files);
 }
 
 main();
