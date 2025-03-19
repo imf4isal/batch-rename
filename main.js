@@ -19,6 +19,11 @@ function parseArgs() {
 function main() {
   const args = parseArgs();
 
+  if (!fs.existsSync(args.folderPath)) {
+    console.error(`The folder ${args.folderPath} does not exist.`);
+    process.exit(1);
+  }
+
   console.log(args);
 }
 
